@@ -1,0 +1,21 @@
+glob_matcher: doublestar
+
+pre-commit:
+  # oxlint --fix and oxfmt write the same files, so they must not run concurrently.
+  piped: true
+  jobs:
+    - name: oxlint
+      root: packages/web/
+      glob: "packages/web/**/*.{js,jsx,ts,tsx}"
+      # --type-aware spawns a TypeScript program; too slow for a commit hook.
+      run: pnpm exec oxlint --fix {staged_files}
+      stage_fixed: true
+
+    - name: oxfmt
+      glob: "**/*.{js,jsx,ts,tsx,json,jsonc,md,html,css}"
+      exclude:
+        - legacy/**
+        - packages/server/**
+        - packages/web/src/routeTree.gen.ts
+      run: pnpm exec oxfmt {staged_files}
+      stage_fixed: true
