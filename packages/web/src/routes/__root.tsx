@@ -1,9 +1,10 @@
-import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router";
+import { HeadContent, Outlet, Scripts, createRootRoute } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { TanStackDevtools } from "@tanstack/react-devtools";
 import { NuqsAdapter } from "nuqs/adapters/tanstack-router";
 
 import appCss from "../styles.css?url";
+import { ThemeProvider } from "#/components/ui/theme-provider";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -37,23 +38,25 @@ export const Route = createRootRoute({
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <HeadContent />
       </head>
       <body>
-        <NuqsAdapter>{children}</NuqsAdapter>
-        <TanStackDevtools
-          config={{
-            position: "bottom-right",
-          }}
-          plugins={[
-            {
-              name: "Tanstack Router",
-              render: <TanStackRouterDevtoolsPanel />,
-            },
-          ]}
-        />
+        <ThemeProvider defaultTheme="dark" storageKey="theme">
+          <NuqsAdapter>{children}</NuqsAdapter>
+          <TanStackDevtools
+            config={{
+              position: "bottom-right",
+            }}
+            plugins={[
+              {
+                name: "Tanstack Router",
+                render: <TanStackRouterDevtoolsPanel />,
+              },
+            ]}
+          />
+        </ThemeProvider>
         <Scripts />
       </body>
     </html>
