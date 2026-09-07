@@ -30,9 +30,10 @@ const (
 )
 
 type Config struct {
-	AppEnv   Environment
-	Port     string
-	LogLevel string
+	AppEnv         Environment
+	Port           string
+	LogLevel       string
+	FrontendOrigin string
 }
 
 func Load() (*Config, error) {
@@ -45,8 +46,9 @@ func Load() (*Config, error) {
 	}
 
 	config := &Config{
-		Port:     getEnv("PORT"),
-		LogLevel: getEnv("LOG_LEVEL"),
+		Port:           getEnv("PORT"),
+		LogLevel:       getEnv("LOG_LEVEL"),
+		FrontendOrigin: getEnv("FRONTEND_ORIGIN"),
 	}
 
 	appEnv := Environment(getEnv("APP_ENV"))
