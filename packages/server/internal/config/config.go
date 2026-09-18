@@ -30,10 +30,22 @@ const (
 )
 
 type Config struct {
-	AppEnv         Environment
-	Port           string
-	LogLevel       string
-	FrontendOrigin string
+	AppEnv                Environment
+	Port                  string
+	DBHost                string
+	DBPort                string
+	DBUser                string
+	DBPassword            string
+	DBName                string
+	SSLMode               string
+	DBMaxConn             string
+	DBMinConn             string
+	DBConnMaxLifetime     string
+	DBConnMaxIdleLifetime string
+	DBHealthCheckPeriod   string
+	ConnectTimeout        string
+	LogLevel              string
+	FrontendOrigin        string
 }
 
 func Load() (*Config, error) {
@@ -46,9 +58,21 @@ func Load() (*Config, error) {
 	}
 
 	config := &Config{
-		Port:           getEnv("PORT"),
-		LogLevel:       getEnv("LOG_LEVEL"),
-		FrontendOrigin: getEnv("FRONTEND_ORIGIN"),
+		Port:                  getEnv("PORT"),
+		LogLevel:              getEnv("LOG_LEVEL"),
+		FrontendOrigin:        getEnv("FRONTEND_ORIGIN"),
+		DBHost:                getEnv("DB_HOST"),
+		DBPort:                getEnv("DB_PORT"),
+		DBUser:                getEnv("DB_USER"),
+		DBPassword:            getEnv("DB_PASSWORD"),
+		DBName:                getEnv("DB_NAME"),
+		SSLMode:               getEnv("SSL_MODE"),
+		DBMaxConn:             getEnv("DB_MAX_CONN"),
+		DBMinConn:             getEnv("DB_MIN_CONN"),
+		DBConnMaxLifetime:     getEnv("DB_CONN_MAX_LIFETIME"),
+		DBConnMaxIdleLifetime: getEnv("DB_CONN_MAX_IDLE_LIFETIME"),
+		DBHealthCheckPeriod:   getEnv("DB_HEALTH_CHECK_PERIOD"),
+		ConnectTimeout:        getEnv("CONNECT_TIMEOUT"),
 	}
 
 	appEnv := Environment(getEnv("APP_ENV"))
